@@ -81,11 +81,17 @@ endif()
 ########################################################################
 # Install directories
 ########################################################################
+find_package(Gnuradio "3.8" REQUIRED)
+include(GrVersion)
+
 include(GrPlatform) #define LIB_SUFFIX
-set(GR_RUNTIME_DIR      bin)
-set(GR_LIBRARY_DIR      lib${LIB_SUFFIX})
+
+if(NOT CMAKE_MODULES_DIR)
+  set(CMAKE_MODULES_DIR lib${LIB_SUFFIX}/cmake)
+endif(NOT CMAKE_MODULES_DIR)
+
 set(GR_INCLUDE_DIR      include/sparsdr)
-set(GR_DATA_DIR         share)
+set(GR_CMAKE_DIR        ${CMAKE_MODULES_DIR}/sparsdr)
 set(GR_PKG_DATA_DIR     ${GR_DATA_DIR}/${CMAKE_PROJECT_NAME})
 set(GR_DOC_DIR          ${GR_DATA_DIR}/doc)
 set(GR_PKG_DOC_DIR      ${GR_DOC_DIR}/${CMAKE_PROJECT_NAME})
@@ -127,23 +133,10 @@ find_package(UHD REQUIRED)
 find_package(CppUnit)
 find_package(Doxygen)
 
-# Search for GNU Radio and its components and versions. Add any
-# components required to the list of GR_REQUIRED_COMPONENTS (in all
-# caps such as FILTER or FFT) and change the version to the minimum
-# API compatible version required.
-set(GR_REQUIRED_COMPONENTS RUNTIME UHD BLOCKS FILTER)
-find_package(Gnuradio "3.7.2" REQUIRED)
-list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_SOURCE_DIR}/cmake/Modules)
-include(GrVersion)
-
-if(NOT CPPUNIT_FOUND)
-    message(FATAL_ERROR "CppUnit required to compile sparsdr")
-endif()
-
 ########################################################################
 # Qt (for GUI blocks) and Python APIs
 ########################################################################
-find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
+find_package(Qt5 REQUIRED COMPONENTS Core Widgets)
 set(CMAKE_AUTOMOC ON)
 # Let automoc run on generated files
 cmake_policy(SET CMP0071 NEW)

@@ -1,4 +1,4 @@
-# Copyright 2011,2012,2016 Free Software Foundation, Inc.
+# Copyright 2011,2012,2016,2018,2019 Free Software Foundation, Inc.
 #
 # This file is part of GNU Radio
 #
@@ -22,11 +22,7 @@
 ########################################################################
 include(GrPlatform) #define LIB_SUFFIX
 
-include_directories(
-    ${Boost_INCLUDE_DIR}
-    ${PYTHON_INCLUDE_DIRS}
-)
-link_directories(${Boost_LIBRARY_DIRS})
+find_package(UHD)
 
 list(APPEND sparsdr_sources
     average_detector_impl.cc
@@ -45,17 +41,19 @@ list(APPEND sparsdr_sources
 
 set(sparsdr_sources "${sparsdr_sources}" PARENT_SCOPE)
 if(NOT sparsdr_sources)
-	MESSAGE(STATUS "No C++ sources... skipping lib/")
-	return()
+    MESSAGE(STATUS "No C++ sources... skipping lib/")
+    return()
 endif(NOT sparsdr_sources)
 
 add_library(gnuradio-sparsdr SHARED ${sparsdr_sources})
-target_link_libraries(gnuradio-sparsdr
-	${Boost_LIBRARIES}
-	${GNURADIO_ALL_LIBRARIES}
-    ${PYTHON_LIBRARIES}
-	Qt5::Widgets
-)
+target_link_libraries(gnuradio-sparsdr gnuradio::gnuradio-runtime
+  UHD::UHD
+  )
+
+target_include_directories(gnuradio-sparsdr
+    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>
+    PUBLIC $<INSTALL_INTERFACE:include>
+  )
 set_target_properties(gnuradio-sparsdr PROPERTIES DEFINE_SYMBOL "gnuradio_sparsdr_EXPORTS")
 
 if(APPLE)
@@ -68,34 +66,42 @@ endif(APPLE)
 # Install built library files
 ########################################################################
 include(GrMiscUtils)
-GR_LIBRARY_FOO(gnuradio-sparsdr RUNTIME_COMPONENT "sparsdr_runtime" DEVEL_COMPONENT "sparsdr_devel")
-
-########################################################################
-# Build and register unit test
-########################################################################
-include(GrTest)
-
-include_directories(${CPPUNIT_INCLUDE_DIRS})
-
-list(APPEND test_sparsdr_sources
-    ${CMAKE_CURRENT_SOURCE_DIR}/test_sparsdr.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/qa_sparsdr.cc
-)
-
-add_executable(test-sparsdr ${test_sparsdr_sources})
-
-target_link_libraries(
-  test-sparsdr
-  ${GNURADIO_RUNTIME_LIBRARIES}
-  ${Boost_LIBRARIES}
-  ${CPPUNIT_LIBRARIES}
-  gnuradio-sparsdr
-)
-
-GR_ADD_TEST(test_sparsdr test-sparsdr)
+GR_LIBRARY_FOO(gnuradio-sparsdr)
 
 ########################################################################
 # Print summary
 ########################################################################
 message(STATUS "Using install prefix: ${CMAKE_INSTALL_PREFIX}")
 message(STATUS "Building for version: ${VERSION} / ${LIBVER}")
+
+########################################################################
+# Build and register unit test
+########################################################################
+include(GrTest)
+
+# If your unit tests require special include paths, add them here
+#include_directories(${CPPUNIT_INCLUDE_DIRS})
+# List all files that contain Boost.UTF unit tests here
+list(APPEND test_sparsdr_sources
+    ${CMAKE_CURRENT_SOURCE_DIR}/test_sparsdr.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/qa_sparsdr.cc
+)
+# Anything we need to link to for the unit tests go here
+list(APPEND
+  GR_TEST_TARGET_DEPS
+  test-sparsdr
+  GNURADIO_RUNTIME_LIBRARIES
+  Boost_LIBRARIES
+  CPPUNIT_LIBRARIES
+  gnuradio-sparsdr)
+
+if(NOT test_sparsdr_sources)
+    MESSAGE(STATUS "No C++ unit tests... skipping")
+    return()
+endif(NOT test_sparsdr_sources)
+
+#foreach(qa_file ${test_sparsdr_sources})
+#    GR_ADD_CPP_TEST("sparsdr_${qa_file}"
+#        ${CMAKE_CURRENT_SOURCE_DIR}/${qa_file}
+#    )
+#endforeach(qa_file)

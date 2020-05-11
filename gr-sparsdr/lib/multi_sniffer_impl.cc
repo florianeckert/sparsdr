@@ -74,7 +74,7 @@ namespace gr {
             boost::rational<uint32_t> resampling(
                 sniffer_sample_rate, sample_rate);
             // Create resampler
-            new_sniffer_blocks.resampler = gr::filter::rational_resampler_base_ccf::make(
+            new_sniffer_blocks.resampler = gr::filter::rational_resampler_base<gr_complex, gr_complex, float>::make(
                 resampling.numerator(),
                 resampling.denominator(),
                 design_filter(resampling.numerator(), resampling.denominator(), 0.4)

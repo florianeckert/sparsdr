@@ -5,7 +5,7 @@
 
 #include <map>
 
-#include <gnuradio/filter/rational_resampler_base_ccf.h>
+#include <gnuradio/filter/rational_resampler_base.h>
 #include <gnuradio/blocks/file_source.h>
 
 namespace gr {
@@ -20,6 +20,7 @@ namespace gr {
             /*! \brief The file source */
             gr::blocks::file_source::sptr file_source;
             /*! \brief The resampler (may be null) */
+            // gr::filter::rational_resampler_base<gr_complex, gr_complex, float> filter::rational_resampler::sptr;
             gr::filter::rational_resampler_base_ccf::sptr resampler;
             /*! \brief The sniffer */
             gr::basic_block_sptr sniffer;

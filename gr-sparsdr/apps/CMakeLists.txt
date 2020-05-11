@@ -44,41 +44,41 @@ install(
     DESTINATION bin
 )
 
-find_package(gr_bluetooth)
-
-if(GR_BLUETOOTH_FOUND)
-    # sparsdr_bluetooth_sniffer
-    add_executable(sparsdr_bluetooth_sniffer
-        sparsdr_bluetooth_sniffer.cc
-    )
-    target_include_directories(sparsdr_bluetooth_sniffer
-        PRIVATE
-        ${GR_BLUETOOTH_INCLUDE_DIRS}
-    )
-    target_link_libraries(sparsdr_bluetooth_sniffer
-        gnuradio-sparsdr
-        ${GR_BLUETOOTH_LIBRARIES}
-    )
-    install(
-        TARGETS sparsdr_bluetooth_sniffer
-        DESTINATION bin
-    )
-
-    # sparsdr_receive_sniffer
-    add_executable(sparsdr_receive_sniffer
-        sparsdr_receive_sniffer.cc
-    )
-    target_include_directories(sparsdr_receive_sniffer
-        PRIVATE
-        ${GR_BLUETOOTH_INCLUDE_DIRS}
-    )
-    target_link_libraries(sparsdr_receive_sniffer
-        gnuradio-sparsdr
-        ${GR_BLUETOOTH_LIBRARIES}
-        ${UHD_LIBRARIES}
-    )
-    install(
-        TARGETS sparsdr_receive_sniffer
-        DESTINATION bin
-    )
-endif()
+#find_package(gr_bluetooth)
+#
+#if(GR_BLUETOOTH_FOUND)
+#    # sparsdr_bluetooth_sniffer
+#    add_executable(sparsdr_bluetooth_sniffer
+#        sparsdr_bluetooth_sniffer.cc
+#    )
+#    target_include_directories(sparsdr_bluetooth_sniffer
+#        PRIVATE
+#        ${GR_BLUETOOTH_INCLUDE_DIRS}
+#    )
+#    target_link_libraries(sparsdr_bluetooth_sniffer
+#        gnuradio-sparsdr
+#        ${GR_BLUETOOTH_LIBRARIES}
+#    )
+#    install(
+#        TARGETS sparsdr_bluetooth_sniffer
+#        DESTINATION bin
+#    )
+#
+#    # sparsdr_receive_sniffer
+#    add_executable(sparsdr_receive_sniffer
+#        sparsdr_receive_sniffer.cc
+#    )
+#    target_include_directories(sparsdr_receive_sniffer
+#        PRIVATE
+#        ${GR_BLUETOOTH_INCLUDE_DIRS}
+#    )
+#    target_link_libraries(sparsdr_receive_sniffer
+#        gnuradio-sparsdr
+#        ${GR_BLUETOOTH_LIBRARIES}
+#        ${UHD_LIBRARIES}
+#    )
+#    install(
+#        TARGETS sparsdr_receive_sniffer
+#        DESTINATION bin
+#    )
+#endif()
