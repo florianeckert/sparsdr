@@ -18,10 +18,10 @@
 # Boston, MA 02110-1301, USA.
 
 install(FILES
-    sparsdr_reconstruct.xml
-    sparsdr_reconstruct_from_file.xml
-    sparsdr_compressing_usrp_source.xml
-    sparsdr_average_waterfall.xml
-    sparsdr_sample_distributor.xml
-    sparsdr_tagged_wavfile_sink.xml DESTINATION share/gnuradio/grc/blocks
+    sparsdr_reconstruct.block.yml
+    sparsdr_reconstruct_from_file.block.yml
+    sparsdr_compressing_usrp_source.block.yml
+    sparsdr_average_waterfall.block.yml
+    sparsdr_sample_distributor.block.yml
+    sparsdr_tagged_wavfile_sink.block.yml DESTINATION share/gnuradio/grc/blocks
 )
