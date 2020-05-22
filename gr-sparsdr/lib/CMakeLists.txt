@@ -92,7 +92,7 @@ message(STATUS "Building for version: ${VERSION} / ${LIBVER}")
 include(GrTest)
 
 # If your unit tests require special include paths, add them here
-#include_directories(${CPPUNIT_INCLUDE_DIRS})
+#include_directories()
 # List all files that contain Boost.UTF unit tests here
 list(APPEND test_sparsdr_sources
     ${CMAKE_CURRENT_SOURCE_DIR}/test_sparsdr.cc
