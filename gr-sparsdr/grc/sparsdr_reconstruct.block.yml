@@ -425,6 +425,7 @@ templates:
     var_make: |-
         ${id}_bands = sparsdr.band_spec_vector()
         % if int(band_count) > 0:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_0_frequency}, ${band_0_bins}))
         % endif
         % if int(band_count) > 1:
         ${id}_bands.push_back(sparsdr.band_spec(${band_1_frequency}, ${band_1_bins}))
