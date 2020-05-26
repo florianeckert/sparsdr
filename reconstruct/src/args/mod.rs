@@ -26,6 +26,7 @@ use clap::{App, Arg};
 use simplelog::LevelFilter;
 
 pub use self::band_args::BandArgs;
+use sparsdr_reconstruct::format::SampleFormat;
 
 #[derive(Debug)]
 pub struct Args {
@@ -33,8 +34,6 @@ pub struct Args {
     pub source_path: Option<PathBuf>,
     /// Enable buffering for source and destination
     pub buffer: bool,
-    /// Bandwidth of the signal before compression
-    pub compressed_bandwidth: f32,
     /// Bands to decompress
     pub bands: Vec<BandArgs>,
     /// Log level
@@ -47,6 +46,8 @@ pub struct Args {
     pub channel_capacity: usize,
     /// Window input time log path
     pub input_time_log_path: Option<PathBuf>,
+    /// Input sample format
+    pub sample_format: SampleFormat,
     /// Private field to prevent exhaustive matching and literal creation
     _0: (),
 }
@@ -69,7 +70,8 @@ impl Args {
                         "A file to read compressed samples from. If no file is specified, samples \
                          will be read from standard input.",
                     ),
-            ).arg(
+            )
+            .arg(
                 Arg::with_name("destination")
                     .long("destination")
                     .takes_value(true)
@@ -78,14 +80,16 @@ impl Args {
                         "A file to write uncompressed samples to. If no file is specified, \
                          samples will be written to standard output.",
                     ),
-            ).arg(
+            )
+            .arg(
                 Arg::with_name("bins")
                     .long("bins")
                     .takes_value(true)
                     .default_value("2048")
                     .validator(validate::<u16>)
                     .help("The number of bins to decompress"),
-            ).arg(
+            )
+            .arg(
                 Arg::with_name("center_frequency")
                     .long("center-frequency")
                     .takes_value(true)
@@ -96,22 +100,13 @@ impl Args {
                         "The desired center frequency of the decompressed signal, relative to \
                          the center frequency of the compressed data.",
                     ),
-            ).arg(
-                Arg::with_name("compressed_bandwidth")
-                    .long("compressed-bandwidth")
-                    .takes_value(true)
-                    .default_value("100000000")
-                    .validator(validate::<f32>)
-                    .value_name("hertz")
-                    .help(
-                        "The bandwidth of the signal before compression (also known as Fs in the \
-                         MATLAB code). The default value is 100 MHz.",
-                    ),
-            ).arg(
+            )
+            .arg(
                 Arg::with_name("unbuffered")
                     .long("unbuffered")
                     .help("Disables buffering on the source and destination"),
-            ).arg(
+            )
+            .arg(
                 Arg::with_name("log_level")
                     .long("log-level")
                     .takes_value(true)
@@ -119,48 +114,66 @@ impl Args {
                     .possible_values(&["OFF", "ERROR", "WARN", "INFO", "DEBUG", "TRACE"])
                     .help("The level of logging to enable"),
             )
-            .arg(Arg::with_name("decompress_band")
-                .long("decompress-band")
-                .takes_value(true)
-                .multiple(true)
-                .value_name("bins:frequency[[:path]:time_log_path]")
-                .help("The number of bins, center frequency, and output file path of a band to \
+            .arg(
+                Arg::with_name("decompress_band")
+                    .long("decompress-band")
+                    .takes_value(true)
+                    .multiple(true)
+                    .value_name("bins:frequency[:path[:time_log_path]]")
+                    .help(
+                        "The number of bins, center frequency, and output file path of a band to \
                     be decompressed. If the output file path is not specified, decompressed \
                     samples from this band will be written to standard output. This argument may \
-                    be repeated to decompress multiple bands.")
-                .conflicts_with_all(&["destination", "bins", "center_frequency"])
-                .validator(validate::<BandArgs>)
+                    be repeated to decompress multiple bands.",
+                    )
+                    .conflicts_with_all(&["destination", "bins", "center_frequency"])
+                    .validator(validate::<BandArgs>),
             )
-            .arg(Arg::with_name("no_progress")
-                .long("no-progress-bar")
-                .help("Disables the command-line progress bar")
+            .arg(
+                Arg::with_name("no_progress")
+                    .long("no-progress-bar")
+                    .help("Disables the command-line progress bar"),
             )
-            .arg(Arg::with_name("report")
-                .long("report")
-                .help("Displays a report of implementation-defined information about the \
-                reconstruction process")
+            .arg(Arg::with_name("report").long("report").help(
+                "Displays a report of implementation-defined information about the \
+                reconstruction process",
+            ))
+            .arg(
+                Arg::with_name("channel_capacity")
+                    .long("channel-capacity")
+                    .takes_value(true)
+                    .default_value("32")
+                    .validator(validate::<usize>)
+                    .value_name("windows")
+                    .help(
+                        "Capacity of input -> FFT/output stage channels (this option is unstable)",
+                    ),
             )
-            .arg(Arg::with_name("channel_capacity")
-                .long("channel-capacity")
-                .takes_value(true)
-                .default_value("32")
-                .validator(validate::<usize>)
-                .value_name("windows")
-                .help("Capacity of input -> FFT/output stage channels (this option is unstable)")
+            .arg(
+                Arg::with_name("input_log_path")
+                    .long("input-log")
+                    .takes_value(true)
+                    .value_name("path")
+                    .help("A path to a file to log the times when windows are read"),
             )
-            .arg(Arg::with_name("input_log_path")
-                .long("input-log")
-                .takes_value(true)
-                .value_name("path")
-                .help("A path to a file to log the times when windows are read")
+            .arg(
+                Arg::with_name("sample_format")
+                    .long("format")
+                    .takes_value(true)
+                    .default_value("n210")
+                    .possible_values(&["n210", "pluto"])
+                    .help(
+                        "The compressed sample format to read (this depends on the radio used to \
+                capture the signals)",
+                    ),
             )
             .get_matches();
 
         let buffer = !matches.is_present("unbuffered");
 
         let bands = if let Some(band_strings) = matches.values_of("decompress_band") {
-            // New multi-band version
             band_strings
+                .into_iter()
                 .map(|s| BandArgs::from_str(s).unwrap())
                 .collect()
         } else {
@@ -178,14 +191,15 @@ impl Args {
             vec![band]
         };
 
+        let sample_format = match matches.value_of("sample_format") {
+            Some("n210") => SampleFormat::n210(),
+            Some("pluto") => SampleFormat::pluto(),
+            _ => panic!("Invalid or missing sample format"),
+        };
+
         Args {
             source_path: matches.value_of_os("source").map(PathBuf::from),
             buffer,
-            compressed_bandwidth: matches
-                .value_of("compressed_bandwidth")
-                .unwrap()
-                .parse()
-                .unwrap(),
             bands,
             log_level: matches.value_of("log_level").unwrap().parse().unwrap(),
             report: matches.is_present("report"),
@@ -196,6 +210,7 @@ impl Args {
                 .parse()
                 .unwrap(),
             input_time_log_path: matches.value_of("input_log_path").map(PathBuf::from),
+            sample_format,
             _0: (),
         }
     }

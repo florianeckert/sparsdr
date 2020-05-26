@@ -54,14 +54,14 @@
 #[macro_use]
 extern crate clap;
 extern crate indicatif;
-extern crate signal_hook;
 extern crate log;
+extern crate signal_hook;
 extern crate simplelog;
 extern crate sparsdr_reconstruct;
 
 use indicatif::ProgressBar;
 use signal_hook::{flag::register, SIGHUP, SIGINT};
-use simplelog::{Config, TermLogger, SimpleLogger};
+use simplelog::{Config, SimpleLogger, TermLogger, TerminalMode};
 use sparsdr_reconstruct::blocking::BlockLogger;
 use sparsdr_reconstruct::input::iqzip::CompressedSamples;
 use sparsdr_reconstruct::{decompress, BandSetupBuilder, DecompressSetup};
@@ -69,7 +69,8 @@ use sparsdr_reconstruct::{decompress, BandSetupBuilder, DecompressSetup};
 mod args;
 mod setup;
 
-use std::io::{self, Read};
+use std::error::Error;
+use std::io::Read;
 use std::process;
 use std::sync::atomic::AtomicBool;
 use std::sync::Arc;
@@ -77,15 +78,16 @@ use std::sync::Arc;
 use self::args::Args;
 use self::setup::Setup;
 
-fn run() -> io::Result<()> {
+fn run() -> Result<(), Box<dyn Error>> {
     let args = Args::get();
     // Logging
-    let log_status = TermLogger::init(args.log_level, Config::default())
+    let log_status = TermLogger::init(args.log_level, Config::default(), TerminalMode::Stderr)
         .or_else(|_| SimpleLogger::init(args.log_level, Config::default()));
     if let Err(e) = log_status {
         eprintln!("Failed to set up simpler logger: {}", e);
     }
 
+    let sample_format = args.sample_format.clone();
     let setup = Setup::from_args(args)?;
 
     let progress = create_progress_bar(&setup);
@@ -96,9 +98,14 @@ fn run() -> io::Result<()> {
         CompressedSamples::with_block_logger(
             Box::new(progress.wrap_read(setup.source)),
             &in_block_logger,
+            sample_format,
         )
     } else {
-        CompressedSamples::with_block_logger(Box::new(setup.source), &in_block_logger)
+        CompressedSamples::with_block_logger(
+            Box::new(setup.source),
+            &in_block_logger,
+            sample_format,
+        )
     };
 
     // Set up signal handlers for clean exit
@@ -107,7 +114,7 @@ fn run() -> io::Result<()> {
     register(SIGHUP, Arc::clone(&stop_flag))?;
 
     // Configure compression
-    let mut decompress_setup = DecompressSetup::new(samples_in);
+    let mut decompress_setup = DecompressSetup::new(samples_in, setup.sample_format.fft_size());
     decompress_setup
         .set_channel_capacity(setup.channel_capacity)
         .set_source_block_logger(&in_block_logger)
@@ -116,17 +123,19 @@ fn run() -> io::Result<()> {
         decompress_setup.set_input_time_log(input_time_log);
     }
     for band in setup.bands {
-        let mut band_setup = BandSetupBuilder::new(band.destination)
-            .compressed_bandwidth(setup.compressed_bandwidth)
-            .center_frequency(band.center_frequency)
-            .bins(band.bins);
+        let mut band_setup =
+            BandSetupBuilder::new(band.destination, setup.sample_format.fft_size())
+                .compressed_bandwidth(setup.sample_format.compressed_bandwidth())
+                .center_frequency(band.center_frequency)
+                .bins(band.bins);
         if let Some(time_log) = band.time_log {
             band_setup = band_setup.time_log(time_log);
         }
         decompress_setup.add_band(band_setup.build());
     }
 
-    let report = decompress(decompress_setup)?;
+    let report =
+        decompress(decompress_setup).map_err(|e: Box<dyn Error + Send>| -> Box<dyn Error> { e })?;
 
     if let Some(progress) = progress {
         progress.finish();

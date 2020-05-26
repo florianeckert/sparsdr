@@ -15,14 +15,18 @@
  *
  */
 
+use std::error::Error;
 use std::fs::{self, File};
-use std::io::{self, BufReader, BufWriter, Read, Result, Write};
+use std::io::{self, BufReader, BufWriter, Read, Write};
 
-use simplelog::LevelFilter;
 use log::debug;
+use simplelog::LevelFilter;
 
 use super::args::Args;
 use super::args::BandArgs;
+
+use sparsdr_reconstruct::format::SampleFormat;
+use sparsdr_reconstruct::steps::writer::SampleSink;
 
 /// The setup for a decompression operation
 ///
@@ -34,8 +38,6 @@ pub struct Setup {
     pub source_length: Option<u64>,
     /// Log level
     pub log_level: LevelFilter,
-    /// Bandwidth used to create the compressed data
-    pub compressed_bandwidth: f32,
     /// Bands to decompress
     pub bands: Vec<BandSetup>,
     /// Flag to enable progress bar
@@ -46,6 +48,8 @@ pub struct Setup {
     pub channel_capacity: usize,
     /// Window input log file
     pub input_time_log: Option<Box<dyn Write>>,
+    /// Input sample format
+    pub sample_format: SampleFormat,
     /// Private field to prevent exhaustive matching and literal creation
     _0: (),
 }
@@ -57,13 +61,13 @@ pub struct BandSetup {
     /// Center frequency to decompress
     pub center_frequency: f32,
     /// Destination to write to
-    pub destination: Box<dyn Write + Send>,
+    pub destination: Box<dyn SampleSink + Send>,
     /// Window time log
     pub time_log: Option<Box<dyn Write + Send>>,
 }
 
 impl Setup {
-    pub fn from_args(args: Args) -> Result<Self> {
+    pub fn from_args(args: Args) -> Result<Self, Box<dyn Error>> {
         let buffer = args.buffer;
         // Open source and get length
         // The order of opening (source, then output files) is important to prevent deadlock
@@ -98,7 +102,7 @@ impl Setup {
             .bands
             .into_iter()
             .map(|band_args| BandSetup::from_args(band_args, buffer))
-            .collect::<Result<Vec<BandSetup>>>()?;
+            .collect::<Result<Vec<BandSetup>, Box<dyn Error>>>()?;
 
         let input_time_log: Option<Box<dyn Write>> = match args.input_time_log_path {
             Some(path) => Some(Box::new(BufWriter::new(File::create(path)?))),
@@ -111,21 +115,21 @@ impl Setup {
             source,
             source_length,
             log_level: args.log_level,
-            compressed_bandwidth: args.compressed_bandwidth,
             bands,
             progress_bar: args.progress_bar,
             report: args.report,
             channel_capacity: args.channel_capacity,
             input_time_log,
+            sample_format: args.sample_format,
             _0: (),
         })
     }
 }
 
 impl BandSetup {
-    fn from_args(args: BandArgs, buffer: bool) -> Result<Self> {
+    fn from_args(args: BandArgs, buffer: bool) -> Result<Self, Box<dyn Error>> {
         // Open destination
-        let destination: Box<dyn Write + Send> = match args.path {
+        let destination: Box<dyn SampleSink + Send> = match args.path {
             Some(ref path) => {
                 debug!("Opening file {} for output", path.display());
                 if buffer {
