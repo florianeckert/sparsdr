@@ -47,8 +47,6 @@ RUN set -eux; \
 
 USER $USER
 
-RUN echo "source $HOME/.cargo/env" >> /home/$USER/.bashrc
-
 RUN mkdir -p /home/$USER/src
 WORKDIR /home/$USER/src
 RUN git clone  https://github.com/bastibl/sparsdr.git
@@ -62,5 +60,8 @@ RUN sudo ldconfig
 
 WORKDIR /home/$USER/src/sparsdr/reconstruct
 RUN cargo install --path . --locked
+
+WORKDIR /home/$USER
+RUN sudo uhd_images_downloader
 
 ENTRYPOINT ["/bin/bash"]
