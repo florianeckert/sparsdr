@@ -70,6 +70,7 @@ namespace gr {
           ::uhd::stream_args_t("sc16", "sc16")
       ))
     {
+        d_usrp->set_auto_dc_offset(true, 0);
         // Connect the all-important output
         connect(d_usrp, 0, self(), 0);
     }
