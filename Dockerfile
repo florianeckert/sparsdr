@@ -61,6 +61,6 @@ RUN sudo make install
 RUN sudo ldconfig
 
 WORKDIR /home/$USER/src/sparsdr/reconstruct
-RUN cargo install --path .
+RUN cargo install --path . --locked
 
 ENTRYPOINT ["/bin/bash"]
