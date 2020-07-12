@@ -6,9 +6,7 @@ ARG USER=gnuradio
 
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update
-RUN apt-get install -y git vim wget unzip sudo cmake libtool build-essential pkg-config autogen python-dev python-mako python-six swig3.0 python3-mako python3-numpy
-
-RUN apt-get install -y build-essential cmake gnuradio libuhd-dev libfftw3-3 swig curl
+RUN apt-get install -y git vim wget unzip sudo cmake libtool build-essential pkg-config autogen python-dev python-six swig3.0 python3-mako python3-numpy gnuradio libuhd-dev libfftw3-3 curl libqt5widgets5 libqwt-qt5-dev qt5-default g++ libboost-all-dev libgmp-dev swig python3-sphinx python3-lxml doxygen libfftw3-dev libsdl1.2-dev libgsl-dev libqt5opengl5-dev python3-pyqt5 liblog4cpp5-dev libzmq3-dev python3-yaml python3-click python3-click-plugins  python3-zmq python3-scipy
 
 RUN groupadd -g 1000 -r $USER
 RUN useradd -u 1000 -g 1000 --create-home -r $USER
@@ -46,7 +44,6 @@ RUN set -eux; \
     cargo --version; \
     rustc --version;
 
-RUN apt-get -y install libqt5widgets5 libqwt-qt5-dev qt5-default gr-iio
 
 USER $USER
 
@@ -54,7 +51,7 @@ RUN echo "source $HOME/.cargo/env" >> /home/$USER/.bashrc
 
 RUN mkdir -p /home/$USER/src
 WORKDIR /home/$USER/src
-RUN git clone  https://github.com/ucsdsysnet/sparsdr.git
+RUN git clone  https://github.com/bastibl/sparsdr.git
 WORKDIR /home/$USER/src/sparsdr/gr-sparsdr
 RUN mkdir -p /home/$USER/src/sparsdr/gr-sparsdr/build
 WORKDIR /home/$USER/src/sparsdr/gr-sparsdr/build
