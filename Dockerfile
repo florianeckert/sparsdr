@@ -1,9 +1,11 @@
-FROM ubuntu:18.04
+FROM ubuntu:17.04
 
 MAINTAINER Bastian Bloessl <mail@bastibl.net>
 
 ARG USER=gnuradio
 
+RUN sed -i 's/archive.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list
+RUN sed -i 's/security.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update
 RUN apt-get install -y git vim wget unzip sudo cmake libtool build-essential pkg-config autogen python-dev python-six swig3.0 python3-mako python3-numpy gnuradio libuhd-dev libfftw3-3 curl libqt5widgets5 libqwt-qt5-dev qt5-default g++ libboost-all-dev libgmp-dev swig python3-sphinx python3-lxml doxygen libfftw3-dev libsdl1.2-dev libgsl-dev libqt5opengl5-dev python3-pyqt5 liblog4cpp5-dev libzmq3-dev python3-yaml python3-click python3-click-plugins  python3-zmq python3-scipy
@@ -51,6 +53,7 @@ RUN mkdir -p /home/$USER/src
 WORKDIR /home/$USER/src
 RUN git clone  https://github.com/bastibl/sparsdr.git
 WORKDIR /home/$USER/src/sparsdr/gr-sparsdr
+RUN git reset --hard c9dbdaf8118cf1e69c60e2746c496393d9965466
 RUN mkdir -p /home/$USER/src/sparsdr/gr-sparsdr/build
 WORKDIR /home/$USER/src/sparsdr/gr-sparsdr/build
 RUN cmake ..
