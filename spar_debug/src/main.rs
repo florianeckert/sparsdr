@@ -1,5 +1,4 @@
 use std::io::prelude::*;
-use std::convert::TryInto;
 use std::fs;
 
 fn from_bytes<'a, T>(buf: &'a [u8]) -> &'a [T] {
@@ -9,6 +8,17 @@ fn from_bytes<'a, T>(buf: &'a [u8]) -> &'a [T] {
             buf.len() / std::mem::size_of::<T>()
         )
     }
+}
+
+fn bitorder(n: u16) -> u16 {
+
+    let mut ret = 0;
+
+    for i in 0..16 {
+        ret |= ((n >> i) & 1) << (15-i);
+    }
+
+    ret
 }
 
 fn main() {
@@ -29,29 +39,22 @@ fn main() {
     for (n, bin) in bins.iter().enumerate() {
         let meta = *bin & 0xffff_ffff;
         let data = *bin >> 32;
-        let i = data >> 16;
-        let q = data & 0xffff;
 
         let is_average = ((meta >> 15) & 1) > 0;
-        let fft_index = meta & 0b111_1111_1111;
-        let timestamp = ((meta >> 16) << 4) + ((meta  >> 11) & 0b1111);
 
-        // if bin >> 32 > 0 {
-        //     println!("{:064b}", bin);
-        // }
-        // // let fft_index = meta >> 16;
-        // let timestamp = meta & 0b11_1111_1111;
-
-        // assert!(fft_index < 2048);
+        let fft_index = (meta << 1) & 0xffe0;
+        let fft_index = bitorder(fft_index as u16);
 
         if is_average {
-             println!("{:064b} a {}: {}/{}   {}", bin, fft_index, i , q, timestamp);
-            assert_eq!(data, 0);
-             n_avg += 1;
-         } else {
-        //      println!("d {} {}: {}/{}", n, fft_index, i , q);
-             n_data += 1;
-         }
+            let mag = ((data & 0xffff) << 16) | (data >> 16);
+            // if mag > 0 {
+            println!("{:064b} a {}: {}", bin, fft_index, mag);
+            // }
+            n_avg += 1;
+        } else {
+            // println!("{:064b} d {:4}: {}", bin, fft_index, n);
+            n_data += 1;
+        }
     }
 
     println!("bin 0: {}", bins[0]);
