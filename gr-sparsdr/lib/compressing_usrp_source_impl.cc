@@ -168,6 +168,8 @@ namespace gr {
 
         const uint32_t command = (index << 21) | (threshold >> 11);
         d_usrp->set_user_register(registers::THRESHOLD, command);
+
+        std::cout << "set th: " << index << "   th: " << threshold << std::endl;
     }
 
     void
@@ -183,6 +185,8 @@ namespace gr {
         }
         const uint32_t command = (index << 1) | enabled;
         d_usrp->set_user_register(registers::MASK, command);
+
+        std::cout << "set mask " << index << "   " << enabled << std::endl;
     }
 
     void
