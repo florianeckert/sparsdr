@@ -137,7 +137,7 @@ find_package(Doxygen)
 find_package(Qt5 REQUIRED COMPONENTS Core Widgets)
 set(CMAKE_AUTOMOC ON)
 # Let automoc run on generated files
-cmake_policy(SET CMP0071 NEW)
+# cmake_policy(SET CMP0071 NEW)
 
 ########################################################################
 # Setup doxygen option
