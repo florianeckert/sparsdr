@@ -53,7 +53,6 @@ RUN mkdir -p /home/$USER/src
 WORKDIR /home/$USER/src
 RUN git clone  https://github.com/bastibl/sparsdr.git
 WORKDIR /home/$USER/src/sparsdr/gr-sparsdr
-RUN git reset --hard c9dbdaf8118cf1e69c60e2746c496393d9965466
 RUN mkdir -p /home/$USER/src/sparsdr/gr-sparsdr/build
 WORKDIR /home/$USER/src/sparsdr/gr-sparsdr/build
 RUN cmake ..
