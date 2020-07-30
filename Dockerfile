@@ -1,6 +1,6 @@
 FROM ubuntu:17.04
 
-MAINTAINER Bastian Bloessl <mail@bastibl.net>
+LABEL maintainers="Bastian Bloessl <mail@bastibl.net>, Florian Eckert <florian.eckert@ymail.com>"
 
 ARG USER=gnuradio
 
@@ -51,7 +51,7 @@ USER $USER
 
 RUN mkdir -p /home/$USER/src
 WORKDIR /home/$USER/src
-RUN git clone  https://github.com/bastibl/sparsdr.git
+RUN git clone  https://github.com/florianeckert/sparsdr.git
 WORKDIR /home/$USER/src/sparsdr/gr-sparsdr
 RUN mkdir -p /home/$USER/src/sparsdr/gr-sparsdr/build
 WORKDIR /home/$USER/src/sparsdr/gr-sparsdr/build
