@@ -62,8 +62,11 @@ RUN sudo ldconfig
 
 WORKDIR /home/$USER/src/sparsdr/reconstruct
 RUN cargo install --path . --locked
+RUN cargo test
 
 WORKDIR /home/$USER
 RUN sudo uhd_images_downloader
+
+RUN sudo sed -i 's/style = raster/style = native/g' /etc/gnuradio/conf.d/gr-qtgui.conf
 
 ENTRYPOINT ["/bin/bash"]
