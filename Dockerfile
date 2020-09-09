@@ -64,9 +64,19 @@ WORKDIR /home/$USER/src/sparsdr/reconstruct
 RUN cargo install --path . --locked
 RUN cargo test
 
-WORKDIR /home/$USER
 RUN sudo uhd_images_downloader
 
 RUN sudo sed -i 's/style = raster/style = native/g' /etc/gnuradio/conf.d/gr-qtgui.conf
 
+RUN sudo apt-get install -y libbtbb-dev
+WORKDIR /home/$USER/src
+RUN git clone https://github.com/greatscottgadgets/gr-bluetooth
+RUN mkdir -p /home/$USER/src/gr-bluetooth/build
+WORKDIR /home/$USER/src/gr-bluetooth/build
+RUN cmake ..
+RUN make
+RUN sudo make install
+RUN sudo ldconfig
+
+WORKDIR /home/$USER
 ENTRYPOINT ["/bin/bash"]
