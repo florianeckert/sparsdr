@@ -55,10 +55,14 @@ if(GR_BLUETOOTH_FOUND)
     target_include_directories(sparsdr_bluetooth_sniffer
         PRIVATE
         ${GR_BLUETOOTH_INCLUDE_DIRS}
+	# manual addition for libbtbb
+	/usr/include
     )
     target_link_libraries(sparsdr_bluetooth_sniffer
         gnuradio-sparsdr
         ${GR_BLUETOOTH_LIBRARIES}
+	# manual addition for libbtbb
+	/usr/lib/x86_64-linux-gnu/libbtbb.so
     )
     install(
         TARGETS sparsdr_bluetooth_sniffer
@@ -72,11 +76,15 @@ if(GR_BLUETOOTH_FOUND)
     target_include_directories(sparsdr_receive_sniffer
         PRIVATE
         ${GR_BLUETOOTH_INCLUDE_DIRS}
+	# manual addition for libbtbb
+	/usr/include
     )
     target_link_libraries(sparsdr_receive_sniffer
         gnuradio-sparsdr
         ${GR_BLUETOOTH_LIBRARIES}
         ${UHD_LIBRARIES}
+	# manual addition for libbtbb
+	/usr/lib/x86_64-linux-gnu/libbtbb.so
     )
     install(
         TARGETS sparsdr_receive_sniffer
