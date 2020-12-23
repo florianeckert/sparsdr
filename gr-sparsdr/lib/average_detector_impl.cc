@@ -48,15 +48,26 @@ namespace gr {
           // indicates an average
           const uint32_t sample0 = in[i * 2];
           const bool is_average = (sample0 >> 15) & 1 == 1;
+          
           if (is_average) {
               const time_point now = std::chrono::high_resolution_clock::now();
+              //std::cout << time << std::endl;
+              double diff = now.time_since_epoch().count() - d_last_average.time_since_epoch().count();
+              if (diff > 335544320) {
+                  uint32_t time = ((sample0 & 0xf) << 16) | (sample0 >> 16);
+                  std::cout << "Sample Time Diff: " << (time-last_time) << std::endl;
+                  std::cout << "Host Time Diff: " << diff << std::endl;
+                  std::cout << "--------" << std::endl;
+              }
               std::lock_guard<std::mutex> guard(d_last_average_mutex);
               d_last_average = now;
           }
+          last_time = ((sample0 & 0xf) << 16) | (sample0 >> 16);
+          std::cerr << last_time << std::endl;
       }
 
       // Tell runtime system how many output items we produced.
-      return noutput_items;
+      return sample_count*2;
     }
 
     std::chrono::high_resolution_clock::time_point

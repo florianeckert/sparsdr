@@ -141,7 +141,7 @@ void run_receive(const std::string& usrp_address,
     // Basic USRP configuration
     usrp->set_gain(gain);
     usrp->set_center_freq(frequency);
-    usrp->set_antenna("RX2");
+    usrp->set_antenna(antenna);
 
     // Set up mask
     gr::sparsdr::mask_range mask;
@@ -168,6 +168,7 @@ void run_receive(const std::string& usrp_address,
         const auto last_average = receiver->last_average();
         const auto since_last_average = high_resolution_clock::now() - last_average;
         if (since_last_average > expected_average_interval * 2) {
+            std::cout << "time since last average: " << since_last_average.count() << std::endl;
             restart_count += 1;
             std::cerr << "Compression internal overflow, restarting\n";
             receiver->restart_compression();

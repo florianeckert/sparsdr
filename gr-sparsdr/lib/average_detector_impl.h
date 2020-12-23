@@ -38,6 +38,8 @@ namespace gr {
       /*! \brief Mutex that controls access to d_last_average */
       std::mutex d_last_average_mutex;
 
+      uint32_t last_time;
+
      public:
       average_detector_impl();
       ~average_detector_impl();
