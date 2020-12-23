@@ -24,5 +24,6 @@ install(FILES
     sparsdr_compressing_usrp_source.block.yml
     sparsdr_average_waterfall.block.yml
     sparsdr_sample_distributor.block.yml
+    sparsdr_sample_print.block.yml
     sparsdr_tagged_wavfile_sink.block.yml DESTINATION share/gnuradio/grc/blocks
 )

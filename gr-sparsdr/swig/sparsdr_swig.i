@@ -32,6 +32,7 @@ namespace std {
 #include "sparsdr/average_waterfall.h"
 #include "sparsdr/sample_distributor.h"
 #include "sparsdr/tagged_wavfile_sink.h"
+#include "sparsdr/sample_print.h"
 using namespace gr::sparsdr;
 %}
 
@@ -49,6 +50,8 @@ GR_SWIG_BLOCK_MAGIC2(sparsdr, reconstruct_from_file);
 GR_SWIG_BLOCK_MAGIC2(sparsdr, compressing_usrp_source);
 %include "sparsdr/average_waterfall.h"
 GR_SWIG_BLOCK_MAGIC2(sparsdr, average_waterfall);
+%include "sparsdr/sample_print.h"
+GR_SWIG_BLOCK_MAGIC2(sparsdr, sample_print);
 
 %include "sparsdr/sample_distributor.h"
 GR_SWIG_BLOCK_MAGIC2(sparsdr, sample_distributor);

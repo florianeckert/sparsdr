@@ -30,6 +30,7 @@ list(APPEND sparsdr_sources
     multi_sniffer_impl.cc
     reconstruct_impl.cc
     reconstruct_from_file_impl.cc
+    sample_print_impl.cc
     compressing_usrp_source_impl.cc
     gui/average_waterfall_impl.cc
 	gui/stream_average_model.cc

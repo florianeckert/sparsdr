@@ -33,5 +33,6 @@ install(FILES
     reconstruct_from_file.h
     average_waterfall.h
     sample_distributor.h
+    sample_print.h
     tagged_wavfile_sink.h DESTINATION include/sparsdr
 )
