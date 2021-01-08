@@ -163,14 +163,17 @@ void run_receive(const std::string& usrp_address,
     // This type of overflow indicates that whatever is handling the compressed
     // samples could not process them quickly enough.
     uint32_t restart_count = 0;
+    std::cerr << "2*expected_average_interval = " << (2*expected_average_interval.count()) << std::endl;
     while (running) {
         std::this_thread::sleep_for(expected_average_interval * 2);
         const auto last_average = receiver->last_average();
         const auto since_last_average = high_resolution_clock::now() - last_average;
         if (since_last_average > expected_average_interval * 2) {
-            std::cout << "time since last average: " << since_last_average.count() << std::endl;
             restart_count += 1;
+            std::cerr << "////////////" << std::endl;
             std::cerr << "Compression internal overflow, restarting\n";
+            std::cerr << "time since last average: " << since_last_average.count() << std::endl;
+            std::cerr << "////////////" << std::endl;
             receiver->restart_compression();
         }
     }

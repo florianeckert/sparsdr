@@ -51,19 +51,22 @@ namespace gr {
           
           if (is_average) {
               const time_point now = std::chrono::high_resolution_clock::now();
-              //std::cout << time << std::endl;
               double diff = now.time_since_epoch().count() - d_last_average.time_since_epoch().count();
-              if (diff > 335544320) {
-                  uint32_t time = ((sample0 & 0xf) << 16) | (sample0 >> 16);
-                  std::cout << "Sample Time Diff: " << (time-last_time) << std::endl;
-                  std::cout << "Host Time Diff: " << diff << std::endl;
-                  std::cout << "--------" << std::endl;
+              uint32_t time = ((sample0 & 0xf) << 16) | (sample0 >> 16);
+              //if (diff > 335544320) {
+              if ((time-last_time) > 2) std::cerr << "((" << (time-last_time) << "))" << std::endl;
+              if ((time-last_time) > 32767) {
+                  std::cerr << "--------" << std::endl;
+                  std::cerr << "Average Frame Time Diff above Threshold" << std::endl;
+                  std::cerr << "Sample Time Diff: " << (time-last_time) << std::endl;
+                  std::cerr << "Host Time Diff: " << diff << std::endl;
+                  std::cerr << "--------" << std::endl;
               }
               std::lock_guard<std::mutex> guard(d_last_average_mutex);
               d_last_average = now;
           }
           last_time = ((sample0 & 0xf) << 16) | (sample0 >> 16);
-          std::cerr << last_time << std::endl;
+          //std::cerr << last_time << std::endl;
       }
 
       // Tell runtime system how many output items we produced.
