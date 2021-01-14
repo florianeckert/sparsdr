@@ -54,6 +54,7 @@ pub fn set_up_stages_combined<'w, I, B>(
     bands: B,
     channel_capacity: usize,
     input_time_log: Option<Box<dyn Write>>,
+    encode_time: bool,
 ) -> StagesCombined<'w, I::IntoIter>
 where
     I: IntoIterator<Item = Result<Sample>>,
@@ -89,6 +90,7 @@ where
                 fc_bins: band_setup.fc_bins,
                 timeout: band_setup.timeout,
                 outputs: vec![],
+                encode_time: encode_time,
             }
         });
 

@@ -46,6 +46,8 @@ pub struct Setup {
     pub channel_capacity: usize,
     /// Window input log file
     pub input_time_log: Option<Box<dyn Write>>,
+    /// Flag to enable encoding time information into the data stream
+    pub encode_time: bool,
     /// Private field to prevent exhaustive matching and literal creation
     _0: (),
 }
@@ -117,6 +119,7 @@ impl Setup {
             report: args.report,
             channel_capacity: args.channel_capacity,
             input_time_log,
+            encode_time: args.encode_time,
             _0: (),
         })
     }

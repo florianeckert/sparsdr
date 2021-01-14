@@ -54,6 +54,8 @@ pub struct DecompressSetup<'w, 'b, I> {
     ///
     /// When this is set to true, all decompression threads will cleanly exit
     stop: Option<Arc<AtomicBool>>,
+    /// Whether to encode time into data stream or not
+    encode_time: bool,
 }
 
 impl<'w, 'b, I> DecompressSetup<'w, 'b, I> {
@@ -66,6 +68,7 @@ impl<'w, 'b, I> DecompressSetup<'w, 'b, I> {
             source_block_logger: None,
             input_time_log: None,
             stop: None,
+            encode_time: false,
         }
     }
 
@@ -101,6 +104,12 @@ impl<'w, 'b, I> DecompressSetup<'w, 'b, I> {
         self.bands.push(band);
         self
     }
+
+    /// Set whether to encode time into the resulting data stream or not
+    pub fn set_encode_time(&mut self, _encode_time: bool) -> &mut Self {
+        self.encode_time = _encode_time;
+        self
+    }
 }
 
 /// Decompresses bands using the provided setup and returns information about the decompression
@@ -114,6 +123,7 @@ where
         setup.bands,
         setup.channel_capacity,
         setup.input_time_log,
+        setup.encode_time,
     );
 
     // Measure time

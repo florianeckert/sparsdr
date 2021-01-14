@@ -50,14 +50,19 @@ impl Writer {
         windows: I,
         logger: &BlockLogger,
         mut time_log: Option<&mut (dyn Write + Send)>,
+        encode_time: bool,
     ) -> Result<u64>
     where
         W: Write,
         I: IntoIterator<Item = TimeWindow>,
     {
         let mut samples_written = 0;
-
+        
         for window in windows {
+            if encode_time {
+                destination.write_u32::<LE>(0xffffffff)?;
+                destination.write_u32::<LE>(window.time() as u32)?;
+            }
             logger.log_blocking(|| self.write_samples(&mut destination, window.samples()))?;
             samples_written += window.len() as u64;
             trace!("Writing {} samples", window.len());

@@ -111,7 +111,8 @@ fn run() -> io::Result<()> {
     decompress_setup
         .set_channel_capacity(setup.channel_capacity)
         .set_source_block_logger(&in_block_logger)
-        .set_stop_flag(Arc::clone(&stop_flag));
+        .set_stop_flag(Arc::clone(&stop_flag))
+        .set_encode_time(setup.encode_time);
     if let Some(input_time_log) = setup.input_time_log {
         decompress_setup.set_input_time_log(input_time_log);
     }

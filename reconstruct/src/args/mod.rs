@@ -47,6 +47,8 @@ pub struct Args {
     pub channel_capacity: usize,
     /// Window input time log path
     pub input_time_log_path: Option<PathBuf>,
+    /// Flag to enable encoding time information into the data stream
+    pub encode_time: bool,
     /// Private field to prevent exhaustive matching and literal creation
     _0: (),
 }
@@ -154,6 +156,11 @@ impl Args {
                 .value_name("path")
                 .help("A path to a file to log the times when windows are read")
             )
+            .arg(Arg::with_name("encode_time")
+                .long("encode-time")
+                .help("Enables encoding timing information into the datastream with leading \
+                0xffffffff. Can be used in gnuradio to generate tags")
+            )
             .get_matches();
 
         let buffer = !matches.is_present("unbuffered");
@@ -196,6 +203,7 @@ impl Args {
                 .parse()
                 .unwrap(),
             input_time_log_path: matches.value_of("input_log_path").map(PathBuf::from),
+            encode_time: matches.is_present("encode_time"),
             _0: (),
         }
     }
