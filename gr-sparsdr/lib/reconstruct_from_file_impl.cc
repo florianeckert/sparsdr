@@ -33,6 +33,7 @@
 #include <gnuradio/blocks/file_source.h>
 #include <gnuradio/blocks/file_sink.h>
 #include "reconstruct_from_file_impl.h"
+#include "sparsdr/time_encoded_to_tagged_stream.h"
 
 namespace gr {
   namespace sparsdr {
@@ -49,16 +50,16 @@ namespace gr {
     }
 
     reconstruct_from_file::sptr
-    reconstruct_from_file::make(std::vector<band_spec> bands, const std::string& input_path, const std::string& reconstruct_path)
+    reconstruct_from_file::make(std::vector<band_spec> bands, const std::string& input_path, const std::string& reconstruct_path, bool tag_time)
     {
       return gnuradio::get_initial_sptr
-        (new reconstruct_from_file_impl(bands, input_path, reconstruct_path));
+        (new reconstruct_from_file_impl(bands, input_path, reconstruct_path, tag_time));
     }
 
     /*
      * The private constructor
      */
-    reconstruct_from_file_impl::reconstruct_from_file_impl(const std::vector<band_spec>& bands, const std::string& input_path, const std::string& reconstruct_path)
+    reconstruct_from_file_impl::reconstruct_from_file_impl(const std::vector<band_spec>& bands, const std::string& input_path, const std::string& reconstruct_path, bool tag_time)
       : gr::hier_block2("reconstruct",
             // One input for compressed samples
             gr::io_signature::make(0, 0, 0),
@@ -72,11 +73,11 @@ namespace gr {
         d_temp_dir(),
         d_child(0)
     {
-        start_subprocess(bands, input_path, reconstruct_path);
+        start_subprocess(bands, input_path, reconstruct_path, tag_time);
     }
 
     void
-    reconstruct_from_file_impl::start_subprocess(const std::vector<band_spec>& bands, const std::string& input_path, const std::string& reconstruct_path)
+    reconstruct_from_file_impl::start_subprocess(const std::vector<band_spec>& bands, const std::string& input_path, const std::string& reconstruct_path, bool tag_time)
     {
         // Start assembling the command
         std::vector<std::string> arguments;
@@ -86,6 +87,10 @@ namespace gr {
         // Debug log output
         arguments.push_back("--log-level");
         arguments.push_back("WARN");
+
+        if (tag_time) {
+            arguments.push_back("--encode-time");
+        }
 
         // Add the source argument to the command
         arguments.push_back("--source");
@@ -160,8 +165,16 @@ namespace gr {
             const auto pipe_path = make_pipe_path(d_temp_dir, i);
             // Create a file source to read this band
             const auto band_file_source = gr::blocks::file_source::make(sizeof(gr_complex), pipe_path.c_str());
-            // Connect it to the appropriate output of this block
-            connect(band_file_source, 0, this->to_basic_block(), i);
+            if (tag_time) {
+                // convert the datastream from time-encoded to time-tagged
+                const auto converter = time_encoded_to_tagged_stream::make();
+                connect(band_file_source, 0, converter, 0);
+                connect(converter, 0, this->to_basic_block(), i);
+            }
+            else {
+                // Connect it to the appropriate output of this block
+                connect(band_file_source, 0, this->to_basic_block(), i);
+            }
         }
     }
 

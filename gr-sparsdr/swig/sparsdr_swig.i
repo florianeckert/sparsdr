@@ -33,6 +33,7 @@ namespace std {
 #include "sparsdr/sample_distributor.h"
 #include "sparsdr/tagged_wavfile_sink.h"
 #include "sparsdr/sample_print.h"
+#include "sparsdr/time_encoded_to_tagged_stream.h"
 using namespace gr::sparsdr;
 %}
 
@@ -57,3 +58,6 @@ GR_SWIG_BLOCK_MAGIC2(sparsdr, sample_print);
 GR_SWIG_BLOCK_MAGIC2(sparsdr, sample_distributor);
 %include "sparsdr/tagged_wavfile_sink.h"
 GR_SWIG_BLOCK_MAGIC2(sparsdr, tagged_wavfile_sink);
+
+%include "sparsdr/time_encoded_to_tagged_stream.h"
+GR_SWIG_BLOCK_MAGIC2(sparsdr, time_encoded_to_tagged_stream);

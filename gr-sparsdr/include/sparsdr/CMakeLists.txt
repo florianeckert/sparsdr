@@ -34,5 +34,6 @@ install(FILES
     average_waterfall.h
     sample_distributor.h
     sample_print.h
-    tagged_wavfile_sink.h DESTINATION include/sparsdr
+    tagged_wavfile_sink.h
+    time_encoded_to_tagged_stream.h DESTINATION include/sparsdr
 )

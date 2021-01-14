@@ -19,6 +19,10 @@ parameters:
 -   id: input_path
     label: Input path
     dtype: file_open
+-   id: tag_time
+    label: Tag Time
+    dtype: bool
+    default: 'False'
 -   id: band_0_frequency
     label: Band 0 frequency
     category: Bands
@@ -515,7 +519,7 @@ templates:
         % if int(band_count) > 31:
         ${id}_bands.push_back(sparsdr.band_spec(${band_31_frequency}, ${band_31_bins}))
         % endif
-        self.${id} = ${id} = sparsdr.reconstruct_from_file(bands=${id}_bands, input_path=${input_path}, reconstruct_path=distutils.spawn.find_executable(${reconstruct_path}))
+        self.${id} = ${id} = sparsdr.reconstruct_from_file(bands=${id}_bands, input_path=${input_path}, reconstruct_path=distutils.spawn.find_executable(${reconstruct_path}, tag_time=${tag_time}))
         
 
 documentation: |-
@@ -524,6 +528,8 @@ documentation: |-
     Parameters:
 
     bands: The number of bands to reconstruct
+
+    Tag Time: Whether to insert GNU Radio tags for chunks of items on the output stream
 
     Band parameters for band i:
 

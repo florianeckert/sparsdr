@@ -17,7 +17,6 @@
 # along with GNU Radio; see the file COPYING.  If not, write to
 # the Free Software Foundation, Inc., 51 Franklin Street,
 # Boston, MA 02110-1301, USA.
-
 install(FILES
     sparsdr_reconstruct.block.yml
     sparsdr_reconstruct_from_file.block.yml
@@ -25,5 +24,6 @@ install(FILES
     sparsdr_average_waterfall.block.yml
     sparsdr_sample_distributor.block.yml
     sparsdr_sample_print.block.yml
-    sparsdr_tagged_wavfile_sink.block.yml DESTINATION share/gnuradio/grc/blocks
+    sparsdr_tagged_wavfile_sink.block.yml
+    sparsdr_time_encoded_to_tagged_stream.block.yml DESTINATION share/gnuradio/grc/blocks
 )

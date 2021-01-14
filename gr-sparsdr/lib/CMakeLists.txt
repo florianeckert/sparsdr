@@ -23,7 +23,6 @@
 include(GrPlatform) #define LIB_SUFFIX
 
 find_package(UHD)
-
 list(APPEND sparsdr_sources
     average_detector_impl.cc
     real_time_receiver_impl.cc
@@ -38,7 +37,7 @@ list(APPEND sparsdr_sources
 	gui/average_waterfall_view.cpp
     sample_distributor_impl.cc
     tagged_wavfile_sink_impl.cc
-)
+    time_encoded_to_tagged_stream_impl.cc )
 
 set(sparsdr_sources "${sparsdr_sources}" PARENT_SCOPE)
 if(NOT sparsdr_sources)
