@@ -79,7 +79,10 @@ namespace gr {
               // been skipped/deleted plus one. We can omit plus one b/c
               // deleted_samples hasn't been incremented yet
               uint64_t absolute_offset = nitems_written(0) + i - deleted_samples;
-              pmt::pmt_t val = pmt::from_uint64( (in[i] >> 32) );
+              // for sparsdr one time unit equals 10.24µs, we will transmit tags
+              // in µs so we need to transform
+              float time = (in[i] >> 32)*10.24;
+              pmt::pmt_t val = pmt::from_float(time);
               // write tag
               add_item_tag(0, absolute_offset, d_key, val);
               deleted_samples+=1;
