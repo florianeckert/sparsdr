@@ -519,7 +519,7 @@ templates:
         % if int(band_count) > 31:
         ${id}_bands.push_back(sparsdr.band_spec(${band_31_frequency}, ${band_31_bins}))
         % endif
-        self.${id} = ${id} = sparsdr.reconstruct_from_file(bands=${id}_bands, input_path=${input_path}, reconstruct_path=distutils.spawn.find_executable(${reconstruct_path}, tag_time=${tag_time}))
+        self.${id} = ${id} = sparsdr.reconstruct_from_file(bands=${id}_bands, input_path=${input_path}, reconstruct_path=distutils.spawn.find_executable(${reconstruct_path}), tag_time=${tag_time})
         
 
 documentation: |-
