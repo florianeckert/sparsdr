@@ -79,7 +79,7 @@ namespace gr {
               // been skipped/deleted plus one. We can omit plus one b/c
               // deleted_samples hasn't been incremented yet
               uint64_t absolute_offset = nitems_written(0) + i - deleted_samples;
-              pmt::pmt_t val = pmt::from_float((float) in[i]);
+              pmt::pmt_t val = pmt::from_uint64( (in[i] >> 32) );
               // write tag
               add_item_tag(0, absolute_offset, d_key, val);
               deleted_samples+=1;
