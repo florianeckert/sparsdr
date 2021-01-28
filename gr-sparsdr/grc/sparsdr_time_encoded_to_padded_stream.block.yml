@@ -1,0 +1,25 @@
+id: sparsdr_time_encoded_to_padded_stream
+label: time_encoded_to_padded_stream
+category: '[SparSDR]'
+
+templates:
+  imports: import sparsdr
+  make: sparsdr.time_encoded_to_padded_stream(${sample_rate})
+
+parameters:
+-   id: sample_rate
+    label: Sample Rate
+    dtype: real
+    default: 3.125e6
+
+inputs:
+- label: input
+  dtype: complex
+
+outputs:
+- label: output
+  dtype: complex
+
+#  'file_format' specifies the version of the GRC yml format used in the file
+#  and should usually not be changed.
+file_format: 1

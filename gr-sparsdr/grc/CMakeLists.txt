@@ -25,5 +25,6 @@ install(FILES
     sparsdr_sample_distributor.block.yml
     sparsdr_sample_print.block.yml
     sparsdr_tagged_wavfile_sink.block.yml
-    sparsdr_time_encoded_to_tagged_stream.block.yml DESTINATION share/gnuradio/grc/blocks
+    sparsdr_time_encoded_to_tagged_stream.block.yml
+    sparsdr_time_encoded_to_padded_stream.block.yml DESTINATION share/gnuradio/grc/blocks
 )

@@ -35,5 +35,6 @@ install(FILES
     sample_distributor.h
     sample_print.h
     tagged_wavfile_sink.h
-    time_encoded_to_tagged_stream.h DESTINATION include/sparsdr
+    time_encoded_to_tagged_stream.h
+    time_encoded_to_padded_stream.h DESTINATION include/sparsdr
 )

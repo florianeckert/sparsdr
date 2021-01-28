@@ -81,10 +81,20 @@ namespace gr {
               uint64_t absolute_offset = nitems_written(0) + i - deleted_samples;
               // for sparsdr one time unit equals 10.24µs, we will transmit tags
               // in µs so we need to transform
-              float time = (in[i] >> 32)*10.24;
+              float time = (float(in[i] >> 32)*10.24;
               pmt::pmt_t val = pmt::from_float(time);
               // write tag
               add_item_tag(0, absolute_offset, d_key, val);
+              // ### CODE FOR DEBUGGING ###
+              //if (absolute_offset>d_last_offset && time<d_last_time) {
+              //  std::cout << "NEGATIVE TIME" << std::endl;
+              //  printf("last: %8ld ---> %8f\n", d_last_offset, d_last_time);
+              //  printf("curr: %8ld ---> %8f\n", absolute_offset, time);
+              //}
+              //d_last_offset = absolute_offset;
+              //d_last_time = time;
+              //printf("wrote tag t=%lf at offset %ld\n", (time), absolute_offset);
+              // ### END CODE FOR DEBUGGING ###
               deleted_samples+=1;
           }
           else {

@@ -18,26 +18,29 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef INCLUDED_SPARSDR_TIME_ENCODED_TO_TAGGED_STREAM_IMPL_H
-#define INCLUDED_SPARSDR_TIME_ENCODED_TO_TAGGED_STREAM_IMPL_H
+#ifndef INCLUDED_SPARSDR_TIME_ENCODED_TO_PADDED_STREAM_IMPL_H
+#define INCLUDED_SPARSDR_TIME_ENCODED_TO_PADDED_STREAM_IMPL_H
 
-#include <sparsdr/time_encoded_to_tagged_stream.h>
+#include <sparsdr/time_encoded_to_padded_stream.h>
 
 namespace gr {
   namespace sparsdr {
 
-    class time_encoded_to_tagged_stream_impl : public time_encoded_to_tagged_stream
+    class time_encoded_to_padded_stream_impl : public time_encoded_to_padded_stream
     {
      private:
-        pmt::pmt_t d_key;
-        // # BEGIN DEBUG
-        //uint64_t d_last_offset;
-        //float d_last_time;
-        // # END DEBUG
+      // remember last timestamp
+      uint32_t d_last_timestamp;
+      // count number of items consumed since the last tag
+      uint32_t d_items_read_since_last_tag;
+      // keep track of number of zeroes we still need to pad
+      int d_remaining_padding_length;
+      // sample rate
+      double d_sample_rate;
 
      public:
-      time_encoded_to_tagged_stream_impl();
-      ~time_encoded_to_tagged_stream_impl();
+      time_encoded_to_padded_stream_impl(double sample_rate);
+      ~time_encoded_to_padded_stream_impl();
 
       // Where all the action really happens
       void forecast (int noutput_items, gr_vector_int &ninput_items_required);
@@ -52,5 +55,5 @@ namespace gr {
   } // namespace sparsdr
 } // namespace gr
 
-#endif /* INCLUDED_SPARSDR_TIME_ENCODED_TO_TAGGED_STREAM_IMPL_H */
+#endif /* INCLUDED_SPARSDR_TIME_ENCODED_TO_PADDED_STREAM_IMPL_H */
 
