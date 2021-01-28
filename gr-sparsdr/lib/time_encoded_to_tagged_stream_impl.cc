@@ -81,7 +81,7 @@ namespace gr {
               uint64_t absolute_offset = nitems_written(0) + i - deleted_samples;
               // for sparsdr one time unit equals 10.24µs, we will transmit tags
               // in µs so we need to transform
-              float time = (float(in[i] >> 32)*10.24;
+              float time = float(in[i] >> 32)*10.24;
               pmt::pmt_t val = pmt::from_float(time);
               // write tag
               add_item_tag(0, absolute_offset, d_key, val);
