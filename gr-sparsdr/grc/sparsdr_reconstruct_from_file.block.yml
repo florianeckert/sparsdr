@@ -19,10 +19,12 @@ parameters:
 -   id: input_path
     label: Input path
     dtype: file_open
--   id: tag_time
-    label: Tag Time
-    dtype: bool
-    default: 'False'
+-   id: time_config
+    label: Time Processing
+    dtype: enum
+    option_labels: ["None", "Encode in Stream", "Tags", "Pad with Noise"]
+    options: ["0", "1", "2", "3"]
+    default: 2
 -   id: band_0_frequency
     label: Band 0 frequency
     category: Bands
@@ -519,7 +521,7 @@ templates:
         % if int(band_count) > 31:
         ${id}_bands.push_back(sparsdr.band_spec(${band_31_frequency}, ${band_31_bins}))
         % endif
-        self.${id} = ${id} = sparsdr.reconstruct_from_file(bands=${id}_bands, input_path=${input_path}, reconstruct_path=distutils.spawn.find_executable(${reconstruct_path}), tag_time=${tag_time})
+        self.${id} = ${id} = sparsdr.reconstruct_from_file(bands=${id}_bands, input_path=${input_path}, reconstruct_path=distutils.spawn.find_executable(${reconstruct_path}), time_config=${time_config})
         
 
 documentation: |-
@@ -529,7 +531,7 @@ documentation: |-
 
     bands: The number of bands to reconstruct
 
-    Tag Time: Whether to insert GNU Radio tags for chunks of items on the output stream
+    Time Processing: How to process time information when jumps in time occur due to the samples being below the threshold. None: ignore jumps, Encode in Stream: write timestamps as uint32_t samples preceeded by 0xffffffff, Tags: include tags at regular intervals, Pad with Noise: pad jumps in time with low amplitude noise
 
     Band parameters for band i:
 

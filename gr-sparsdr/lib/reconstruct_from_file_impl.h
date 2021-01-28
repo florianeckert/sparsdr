@@ -46,10 +46,10 @@ namespace gr {
       /*! \brief The sparsdr_reconstruct child process, or 0 if none exists */
       pid_t d_child;
 
-      void start_subprocess(const std::vector<band_spec>& bands, const std::string& reconstruct_path, const std::string& input_path, bool tag_time);
+      void start_subprocess(const std::vector<band_spec>& bands, const std::string& reconstruct_path, const std::string& input_path, uint8_t time_config);
 
      public:
-      reconstruct_from_file_impl(const std::vector<band_spec>& bands, const std::string& reconstruct_path, const std::string& input_path, bool tag_time);
+      reconstruct_from_file_impl(const std::vector<band_spec>& bands, const std::string& reconstruct_path, const std::string& input_path, uint8_t time_config);
       ~reconstruct_from_file_impl();
     };
 

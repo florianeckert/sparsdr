@@ -47,10 +47,10 @@ namespace gr {
       pid_t d_child;
 
       void start_subprocess(const std::vector<band_spec>& bands, const std::string& reconstruct_path,
-        bool unbuffered, bool tag_time);
+        bool unbuffered, uint8_t time_config);
 
      public:
-      reconstruct_impl(const std::vector<band_spec>& bands, const std::string& reconstruct_path, bool unbuffered, bool tag_time);
+      reconstruct_impl(const std::vector<band_spec>& bands, const std::string& reconstruct_path, bool unbuffered, uint8_t time_config);
       ~reconstruct_impl();
     };
 

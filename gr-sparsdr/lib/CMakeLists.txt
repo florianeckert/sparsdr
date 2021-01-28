@@ -55,6 +55,7 @@ include(GrPython)
 add_library(gnuradio-sparsdr SHARED ${sparsdr_sources})
 target_link_libraries(gnuradio-sparsdr gnuradio::gnuradio-runtime
   gnuradio::gnuradio-blocks
+  gnuradio::gnuradio-analog
   gnuradio::gnuradio-filter
   gnuradio::gnuradio-fft
   gnuradio::gnuradio-uhd

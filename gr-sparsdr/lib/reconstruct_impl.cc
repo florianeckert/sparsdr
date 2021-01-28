@@ -32,8 +32,11 @@
 #include <gnuradio/io_signature.h>
 #include <gnuradio/blocks/file_source.h>
 #include <gnuradio/blocks/file_sink.h>
+#include <gnuradio/blocks/add_blk.h>
+#include <gnuradio/analog/fastnoise_source.h>
 #include "reconstruct_impl.h"
 #include "sparsdr/time_encoded_to_tagged_stream.h"
+#include "sparsdr/time_encoded_to_padded_stream.h"
 
 namespace gr {
   namespace sparsdr {
@@ -50,17 +53,17 @@ namespace gr {
     }
 
     reconstruct::sptr
-    reconstruct::make(std::vector<band_spec> bands, const std::string& reconstruct_path, bool unbuffered, bool tag_time)
+    reconstruct::make(std::vector<band_spec> bands, const std::string& reconstruct_path, bool unbuffered, uint8_t time_config)
     {
       return gnuradio::get_initial_sptr
-        (new reconstruct_impl(bands, reconstruct_path, unbuffered, tag_time));
+        (new reconstruct_impl(bands, reconstruct_path, unbuffered, time_config));
     }
 
     /*
      * The private constructor
      */
     reconstruct_impl::reconstruct_impl(const std::vector<band_spec>& bands, const std::string& reconstruct_path,
-        bool unbuffered, bool tag_time)
+        bool unbuffered, uint8_t time_config)
       : gr::hier_block2("reconstruct",
             // One input for compressed samples
             gr::io_signature::make(1, 1, sizeof(uint32_t)),
@@ -74,12 +77,12 @@ namespace gr {
         d_temp_dir(),
         d_child(0)
     {
-        start_subprocess(bands, reconstruct_path, unbuffered, tag_time);
+        start_subprocess(bands, reconstruct_path, unbuffered, time_config);
     }
 
     void
     reconstruct_impl::start_subprocess(const std::vector<band_spec>& bands, const std::string& reconstruct_path,
-        bool unbuffered, bool tag_time)
+        bool unbuffered, uint8_t time_config)
     {
         // Start assembling the command
         std::vector<std::string> arguments;
@@ -89,7 +92,8 @@ namespace gr {
         // Debug log output
         arguments.push_back("--log-level");
         arguments.push_back("WARN");
-        if (tag_time) {
+
+        if (time_config != 0) {
             arguments.push_back("--encode-time");
         }
 
@@ -182,11 +186,31 @@ namespace gr {
             const auto pipe_path = make_pipe_path(d_temp_dir, i);
             // Create a file source to read this band
             const auto band_file_source = gr::blocks::file_source::make(sizeof(gr_complex), pipe_path.c_str());
-            if (tag_time) {
+            if (time_config == 2) {
                 // convert the datastream from time-encoded to time-tagged
                 const auto converter = time_encoded_to_tagged_stream::make();
                 connect(band_file_source, 0, converter, 0);
                 connect(converter, 0, this->to_basic_block(), i);
+            }
+            else if (time_config == 3) {
+                // bins rounded up to nearest power of 2
+                int bins = 2048;
+                while((bins>>1) >= iter->bins() && (bins>>1) > 0) {
+                    bins = bins >> 1;
+                }
+                // calculate samp rate of this band
+                double s_rate = double(bins) / 2048.0 * 100000000.0;
+                
+                // pad the time encoded data stream with zeroes and remove timestamps
+                const auto padder = time_encoded_to_padded_stream::make(s_rate);
+                // also add some low amplitude noise to prevent weird behaviour from synthetic samples
+                const auto noise = gr::analog::fastnoise_source<gr_complex>::make(gr::analog::GR_GAUSSIAN, 0.000005);
+                const auto adder = gr::blocks::add_blk<gr_complex>::make();
+
+                connect(band_file_source, 0, padder, 0);
+                connect(padder, 0, adder, 0);
+                connect(noise, 0, adder, 1);
+                connect(adder, 0, this->to_basic_block(), i);
             }
             else {
                 // Connect it to the appropriate output of this block

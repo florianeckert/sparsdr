@@ -85,7 +85,7 @@ ENDIF()
 ########################################################################
 # Install directories
 ########################################################################
-find_package(Gnuradio "3.8" REQUIRED COMPONENTS blocks filter uhd fft)
+find_package(Gnuradio "3.8" REQUIRED COMPONENTS analog blocks filter uhd fft)
 include(GrVersion)
 
 include(GrPlatform) #define LIB_SUFFIX

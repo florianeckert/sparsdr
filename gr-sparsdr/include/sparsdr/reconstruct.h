@@ -51,9 +51,9 @@ namespace gr {
        * \param bands the bands to decompress
        * \param reconstruct_path the path to the sparsdr_reconstruct executable
        * \param unbuffered true to disable buffering on the input and output files
-       * \param tag_time true to enable setting time tags for items
+       * \param time_config 0=None, 1=Encode in Stream, 2=Tags, 3=Pad with Noise
        */
-      static sptr make(std::vector<::gr::sparsdr::band_spec> bands, const std::string& reconstruct_path = "sparsdr_reconstruct", bool unbuffered = false, bool tag_time = false);
+      static sptr make(std::vector<::gr::sparsdr::band_spec> bands, const std::string& reconstruct_path = "sparsdr_reconstruct", bool unbuffered = false, const uint8_t time_config = 0);
     };
 
   } // namespace sparsdr
