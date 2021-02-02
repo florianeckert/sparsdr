@@ -410,6 +410,570 @@ parameters:
     dtype: int
     default: '2048'
     hide: ${ ('none' if band_count > 31 else 'all') }
+-   id: band_32_frequency
+    label: Band 32 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 32 else 'all') }
+-   id: band_32_bins
+    label: Band 32 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 32 else 'all') }
+-   id: band_33_frequency
+    label: Band 33 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 33 else 'all') }
+-   id: band_33_bins
+    label: Band 33 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 33 else 'all') }
+-   id: band_34_frequency
+    label: Band 34 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 34 else 'all') }
+-   id: band_34_bins
+    label: Band 34 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 34 else 'all') }
+-   id: band_35_frequency
+    label: Band 35 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 35 else 'all') }
+-   id: band_35_bins
+    label: Band 35 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 35 else 'all') }
+-   id: band_36_frequency
+    label: Band 36 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 36 else 'all') }
+-   id: band_36_bins
+    label: Band 36 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 36 else 'all') }
+-   id: band_37_frequency
+    label: Band 37 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 37 else 'all') }
+-   id: band_37_bins
+    label: Band 37 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 37 else 'all') }
+-   id: band_38_frequency
+    label: Band 38 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 38 else 'all') }
+-   id: band_38_bins
+    label: Band 38 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 38 else 'all') }
+-   id: band_39_frequency
+    label: Band 39 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 39 else 'all') }
+-   id: band_39_bins
+    label: Band 39 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 39 else 'all') }
+-   id: band_40_frequency
+    label: Band 40 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 40 else 'all') }
+-   id: band_40_bins
+    label: Band 40 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 40 else 'all') }
+-   id: band_41_frequency
+    label: Band 41 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 41 else 'all') }
+-   id: band_41_bins
+    label: Band 41 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 41 else 'all') }
+-   id: band_42_frequency
+    label: Band 42 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 42 else 'all') }
+-   id: band_42_bins
+    label: Band 42 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 42 else 'all') }
+-   id: band_43_frequency
+    label: Band 43 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 43 else 'all') }
+-   id: band_43_bins
+    label: Band 43 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 43 else 'all') }
+-   id: band_44_frequency
+    label: Band 44 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 44 else 'all') }
+-   id: band_44_bins
+    label: Band 44 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 44 else 'all') }
+-   id: band_45_frequency
+    label: Band 45 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 45 else 'all') }
+-   id: band_45_bins
+    label: Band 45 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 45 else 'all') }
+-   id: band_46_frequency
+    label: Band 46 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 46 else 'all') }
+-   id: band_46_bins
+    label: Band 46 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 46 else 'all') }
+-   id: band_47_frequency
+    label: Band 47 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 47 else 'all') }
+-   id: band_47_bins
+    label: Band 47 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 47 else 'all') }
+-   id: band_48_frequency
+    label: Band 48 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 48 else 'all') }
+-   id: band_48_bins
+    label: Band 48 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 48 else 'all') }
+-   id: band_49_frequency
+    label: Band 49 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 49 else 'all') }
+-   id: band_49_bins
+    label: Band 49 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 49 else 'all') }
+-   id: band_50_frequency
+    label: Band 50 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 50 else 'all') }
+-   id: band_50_bins
+    label: Band 50 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 50 else 'all') }
+-   id: band_51_frequency
+    label: Band 51 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 51 else 'all') }
+-   id: band_51_bins
+    label: Band 51 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 51 else 'all') }
+-   id: band_52_frequency
+    label: Band 52 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 52 else 'all') }
+-   id: band_52_bins
+    label: Band 52 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 52 else 'all') }
+-   id: band_53_frequency
+    label: Band 53 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 53 else 'all') }
+-   id: band_53_bins
+    label: Band 53 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 53 else 'all') }
+-   id: band_54_frequency
+    label: Band 54 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 54 else 'all') }
+-   id: band_54_bins
+    label: Band 54 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 54 else 'all') }
+-   id: band_55_frequency
+    label: Band 55 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 55 else 'all') }
+-   id: band_55_bins
+    label: Band 55 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 55 else 'all') }
+-   id: band_56_frequency
+    label: Band 56 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 56 else 'all') }
+-   id: band_56_bins
+    label: Band 56 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 56 else 'all') }
+-   id: band_57_frequency
+    label: Band 57 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 57 else 'all') }
+-   id: band_57_bins
+    label: Band 57 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 57 else 'all') }
+-   id: band_58_frequency
+    label: Band 58 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 58 else 'all') }
+-   id: band_58_bins
+    label: Band 58 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 58 else 'all') }
+-   id: band_59_frequency
+    label: Band 59 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 59 else 'all') }
+-   id: band_59_bins
+    label: Band 59 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 59 else 'all') }
+-   id: band_60_frequency
+    label: Band 60 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 60 else 'all') }
+-   id: band_60_bins
+    label: Band 60 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 60 else 'all') }
+-   id: band_61_frequency
+    label: Band 61 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 61 else 'all') }
+-   id: band_61_bins
+    label: Band 61 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 61 else 'all') }
+-   id: band_62_frequency
+    label: Band 62 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 62 else 'all') }
+-   id: band_62_bins
+    label: Band 62 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 62 else 'all') }
+-   id: band_63_frequency
+    label: Band 63 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 63 else 'all') }
+-   id: band_63_bins
+    label: Band 63 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 63 else 'all') }
+-   id: band_64_frequency
+    label: Band 64 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 64 else 'all') }
+-   id: band_64_bins
+    label: Band 64 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 64 else 'all') }
+-   id: band_65_frequency
+    label: Band 65 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 65 else 'all') }
+-   id: band_65_bins
+    label: Band 65 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 65 else 'all') }
+-   id: band_66_frequency
+    label: Band 66 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 66 else 'all') }
+-   id: band_66_bins
+    label: Band 66 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 66 else 'all') }
+-   id: band_67_frequency
+    label: Band 67 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 67 else 'all') }
+-   id: band_67_bins
+    label: Band 67 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 67 else 'all') }
+-   id: band_68_frequency
+    label: Band 68 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 68 else 'all') }
+-   id: band_68_bins
+    label: Band 68 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 68 else 'all') }
+-   id: band_69_frequency
+    label: Band 69 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 69 else 'all') }
+-   id: band_69_bins
+    label: Band 69 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 69 else 'all') }
+-   id: band_70_frequency
+    label: Band 70 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 70 else 'all') }
+-   id: band_70_bins
+    label: Band 70 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 70 else 'all') }
+-   id: band_71_frequency
+    label: Band 71 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 71 else 'all') }
+-   id: band_71_bins
+    label: Band 71 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 71 else 'all') }
+-   id: band_72_frequency
+    label: Band 72 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 72 else 'all') }
+-   id: band_72_bins
+    label: Band 72 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 72 else 'all') }
+-   id: band_73_frequency
+    label: Band 73 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 73 else 'all') }
+-   id: band_73_bins
+    label: Band 73 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 73 else 'all') }
+-   id: band_74_frequency
+    label: Band 74 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 74 else 'all') }
+-   id: band_74_bins
+    label: Band 74 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 74 else 'all') }
+-   id: band_75_frequency
+    label: Band 75 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 75 else 'all') }
+-   id: band_75_bins
+    label: Band 75 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 75 else 'all') }
+-   id: band_76_frequency
+    label: Band 76 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 76 else 'all') }
+-   id: band_76_bins
+    label: Band 76 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 76 else 'all') }
+-   id: band_77_frequency
+    label: Band 77 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 77 else 'all') }
+-   id: band_77_bins
+    label: Band 77 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 77 else 'all') }
+-   id: band_78_frequency
+    label: Band 78 frequency
+    category: Bands
+    dtype: real
+    default: '0.0'
+    hide: ${ ('none' if band_count > 78 else 'all') }
+-   id: band_78_bins
+    label: Band 78 bins
+    category: Bands
+    dtype: int 
+    default: '2048'
+    hide: ${ ('none' if band_count > 78 else 'all') }
 
 inputs:
 -   domain: stream
@@ -421,7 +985,7 @@ outputs:
     multiplicity: ${ band_count }
 value: ${ value }
 asserts:
-- ${ 32 >= band_count }
+- ${ 78 >= band_count }
 - ${ band_count > 0 }
 
 templates:
@@ -525,6 +1089,147 @@ templates:
         % endif
         % if int(band_count) > 31:
         ${id}_bands.push_back(sparsdr.band_spec(${band_31_frequency}, ${band_31_bins}))
+        % endif
+        % if int(band_count) > 32:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_32_frequency}, ${band_32_bins}))
+        % endif
+        % if int(band_count) > 33:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_33_frequency}, ${band_33_bins}))
+        % endif
+        % if int(band_count) > 34:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_34_frequency}, ${band_34_bins}))
+        % endif
+        % if int(band_count) > 35:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_35_frequency}, ${band_35_bins}))
+        % endif
+        % if int(band_count) > 36:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_36_frequency}, ${band_36_bins}))
+        % endif
+        % if int(band_count) > 37:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_37_frequency}, ${band_37_bins}))
+        % endif
+        % if int(band_count) > 38:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_38_frequency}, ${band_38_bins}))
+        % endif
+        % if int(band_count) > 39:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_39_frequency}, ${band_39_bins}))
+        % endif
+        % if int(band_count) > 40:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_40_frequency}, ${band_40_bins}))
+        % endif
+        % if int(band_count) > 41:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_41_frequency}, ${band_41_bins}))
+        % endif
+        % if int(band_count) > 42:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_42_frequency}, ${band_42_bins}))
+        % endif
+        % if int(band_count) > 43:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_43_frequency}, ${band_43_bins}))
+        % endif
+        % if int(band_count) > 44:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_44_frequency}, ${band_44_bins}))
+        % endif
+        % if int(band_count) > 45:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_45_frequency}, ${band_45_bins}))
+        % endif
+        % if int(band_count) > 46:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_46_frequency}, ${band_46_bins}))
+        % endif
+        % if int(band_count) > 47:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_47_frequency}, ${band_47_bins}))
+        % endif
+        % if int(band_count) > 48:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_48_frequency}, ${band_48_bins}))
+        % endif
+        % if int(band_count) > 49:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_49_frequency}, ${band_49_bins}))
+        % endif
+        % if int(band_count) > 50:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_50_frequency}, ${band_50_bins}))
+        % endif
+        % if int(band_count) > 51:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_51_frequency}, ${band_51_bins}))
+        % endif
+        % if int(band_count) > 52:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_52_frequency}, ${band_52_bins}))
+        % endif
+        % if int(band_count) > 53:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_53_frequency}, ${band_53_bins}))
+        % endif
+        % if int(band_count) > 54:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_54_frequency}, ${band_54_bins}))
+        % endif
+        % if int(band_count) > 55:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_55_frequency}, ${band_55_bins}))
+        % endif
+        % if int(band_count) > 56:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_56_frequency}, ${band_56_bins}))
+        % endif
+        % if int(band_count) > 57:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_57_frequency}, ${band_57_bins}))
+        % endif
+        % if int(band_count) > 58:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_58_frequency}, ${band_58_bins}))
+        % endif
+        % if int(band_count) > 59:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_59_frequency}, ${band_59_bins}))
+        % endif
+        % if int(band_count) > 60:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_60_frequency}, ${band_60_bins}))
+        % endif
+        % if int(band_count) > 61:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_61_frequency}, ${band_61_bins}))
+        % endif
+        % if int(band_count) > 62:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_62_frequency}, ${band_62_bins}))
+        % endif
+        % if int(band_count) > 63:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_63_frequency}, ${band_63_bins}))
+        % endif
+        % if int(band_count) > 64:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_64_frequency}, ${band_64_bins}))
+        % endif
+        % if int(band_count) > 65:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_65_frequency}, ${band_65_bins}))
+        % endif
+        % if int(band_count) > 66:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_66_frequency}, ${band_66_bins}))
+        % endif
+        % if int(band_count) > 67:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_67_frequency}, ${band_67_bins}))
+        % endif
+        % if int(band_count) > 68:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_68_frequency}, ${band_68_bins}))
+        % endif
+        % if int(band_count) > 69:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_69_frequency}, ${band_69_bins}))
+        % endif
+        % if int(band_count) > 70:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_70_frequency}, ${band_70_bins}))
+        % endif
+        % if int(band_count) > 71:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_71_frequency}, ${band_71_bins}))
+        % endif
+        % if int(band_count) > 72:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_72_frequency}, ${band_72_bins}))
+        % endif
+        % if int(band_count) > 73:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_73_frequency}, ${band_73_bins}))
+        % endif
+        % if int(band_count) > 74:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_74_frequency}, ${band_74_bins}))
+        % endif
+        % if int(band_count) > 75:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_75_frequency}, ${band_75_bins}))
+        % endif
+        % if int(band_count) > 76:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_76_frequency}, ${band_76_bins}))
+        % endif
+        % if int(band_count) > 77:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_77_frequency}, ${band_77_bins}))
+        % endif
+        % if int(band_count) > 78:
+        ${id}_bands.push_back(sparsdr.band_spec(${band_78_frequency}, ${band_78_bins}))
         % endif
         self.${id} = ${id} = sparsdr.reconstruct(bands=${id}_bands, reconstruct_path=distutils.spawn.find_executable(${reconstruct_path}), unbuffered=${unbuffered}, time_config=${time_config})
 
